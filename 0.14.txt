@@ -1,0 +1,21 @@
+ccs-base := 	[\p{L}\p{N}\p{P}\p{S}\p{Zs}]
+ccs-extend := 	[\p{M}\p{Join_Control}]
+extended_base := 	ccs-base
+| hangul-syllable
+crlf := 	CR LF
+legacy-core := 	hangul-syllable
+| ri-sequence
+| xpicto-sequence
+| [^Control CR LF]
+legacy-postcore := 	[Extend ZWJ]
+core := 	hangul-syllable
+| ri-sequence
+| xpicto-sequence
+| [^Control CR LF]
+postcore := 	[Extend ZWJ SpacingMark]
+precore := 	Prepend
+RI-Sequence := 	RI RI
+hangul-syllable := 	L* (V+ | LV V* | LVT) T*
+| L+
+| T+
+xpicto-sequence := 	\p{Extended_Pictographic} (Extend* ZWJ \p{Extended_Pictographic})*

@@ -26,8 +26,17 @@ SpacingMark="\p{gcb=SpacingMark}"
 Any="\p{any}"
 ExtendPict="\p{Extended_Pictographic}"
 
+# InCB -> Indic_Conjunct_Break
+InCBConsonant="\p{incb=consonant}"
+InCBExtend="\p{incb=extend}"
+InCBLinker="\p{incb=linker}"
+
 echo "(?x)
 $CR $LF
+|
+$CR
+|
+$LF
 |
 $Control
 |
@@ -44,6 +53,14 @@ $Prepend*
   $RI $RI
   |
   $ExtendPict ($Extend* $ZWJ $ExtendPict)*
+  |
+  $InCBConsonant (
+      $InCBExtend
+      $InCBLinker*
+      $InCBLinker
+      [$InCBExtend $InCBLinker]*
+      $InCBConsonant
+    )+
   |
   [^$Control $CR $LF]
 )
